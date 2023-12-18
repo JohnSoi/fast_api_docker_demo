@@ -1,12 +1,24 @@
 # Базовый образ
 FROM python:3.10.13-slim
 
-# Рабочая директория
-WORKDIR /usr/src/fast-api-docker
+# Создание директории для пользователя приложения
+RUN mkdir -p /home/app
 
-# Переменные окружения
+# Создание группы и пользователя приложения
+RUN addgroup --system app && adduser --system --group app
+
+# Создание директорий для приложения
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+# Установка переменных окружения
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT PRODUCTION
+ENV TESTING 0
+
 
 # Установка системных зависимостей
 RUN apt-get update \
@@ -30,3 +42,12 @@ RUN chmod +x /usr/src/fast-api-docker/entrypoint.sh
 
 # Запуск проверки на корректность экзепляра БД
 ENTRYPOINT ["/usr/src/fast-api-docker/entrypoint.sh"]
+
+# chown all the files to the app user
+RUN chown -R app:app $APP_HOME
+
+# change to the app user
+USER app
+
+# run gunicorn
+CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker

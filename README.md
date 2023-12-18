@@ -37,6 +37,7 @@ docker-compose exec web-db psql -U postgres
 # Список таблиц
 \dt
 ```
+* Если после клонирования и запуска контейнера, падает ```entrypoint.sh``` нужно изменить окончание строк на ```\n```
 ---
 
 ## Работа с Tortoise и Aerich

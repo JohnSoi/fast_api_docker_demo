@@ -21,6 +21,7 @@ TORTOISE_ORM: Dict[str, Dict[str, Union[str]]] = {
 
 
 def init_db(application: FastAPI) -> None:
+    log.info('Инициализируется Tortoise')
     register_tortoise(
         application,
         db_url=os.getenv('DATABASE_URL'),

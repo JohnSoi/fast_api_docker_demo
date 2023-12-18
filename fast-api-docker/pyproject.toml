@@ -6,7 +6,7 @@ authors = ["JohnSoi <un.perso@yandex.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 fastapi = "^0.105.0"
 uvicorn = "^0.24.0.post1"
 pydantic = "^2.5.2"
@@ -17,6 +17,7 @@ aerich = "^0.7.2"
 pytest = "^7.4.3"
 requests = "^2.31.0"
 httpx = "^0.25.2"
+gunicorn = "^21.2.0"
 
 [tool.aerich]
 tortoise_orm = "fast_api_docker.db.TORTOISE_ORM"
