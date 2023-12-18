@@ -36,13 +36,6 @@ RUN poetry config virtualenvs.create false  \
 # Копирование папки проекта
 COPY . .
 
-# Добавление entrypoint.sh
-COPY ./entrypoint.sh .
-RUN chmod +x /usr/src/fast-api-docker/entrypoint.sh
-
-# Запуск проверки на корректность экзепляра БД
-ENTRYPOINT ["/usr/src/fast-api-docker/entrypoint.sh"]
-
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
 

@@ -126,3 +126,60 @@ def test_app():
 ```bash
 docker-compose exec web poetry run pytest
 ```
+* Проверка покрытия кода тестами
+Для проверки нужно установить зависимость 
+```pytest-cov``` в проект и создать файл 
+в корне ```.coverager``` с содержанием:
+```ini
+[run]
+omit = tests/*
+branch = True 
+```
+Запустить тест покрытия:
+```bash
+docker-compose exec web python -m pytest --cov="."
+```
+* Инструменты форматирования кода
+
+1. ```flake8``` - линтер соотвествия стандарту
+
+Необходим файл ```setup.cfg``` в корне проекта с содержимым:
+```ini
+[flake8]
+max-line-length = 119
+```
+Запуск:
+```bash
+docker-compose exec web flake8 .
+```
+
+2. ```black``` - типизация кода
+
+Запуск:
+```bash
+docker-compose exec web black .
+```
+
+3. ```isort``` - сортировка импорта по алфавиту
+Запуск:
+```bash
+docker-compose exec web isort .
+```
+---
+* Работа с пакетами GitHub
+
+Для создания пакета, нужно собрать образ Docker:
+```bash
+docker build -f ./Dockerfile.prod -t docker.pkg.github.com/<username>/<repository_name>/<name>:latest .
+```
+
+Далее авторизоваться в Docker (права на workflow, repo, package)
+```bash
+docker login docker.pkg.github.com -u <USERNAME> -p <TOKEN>
+```
+
+Отправить в GitHub
+```bash
+docker push docker.pkg.github.com/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest
+```
+> Имя берется из 1 пункта
