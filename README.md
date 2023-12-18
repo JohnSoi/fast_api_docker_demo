@@ -183,3 +183,23 @@ docker login docker.pkg.github.com -u <USERNAME> -p <TOKEN>
 docker push docker.pkg.github.com/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest
 ```
 > Имя берется из 1 пункта
+---
+
+## Парсинг статей и выделение основного смысла
+```newspaper3k``` - библиотека, позволяющая парсить и получать основной смысл статьи в одной библиотеки с 
+машинным обучением.
+
+<a href="https://newspaper.readthedocs.io/en/latest/">Документация</a>
+ 
+## Фоновые задачи 
+
+```python
+from fastapi import BackgroundTasks
+
+async def create_summary(payload, background_tasks: BackgroundTasks) -> SummaryResponseSchema:
+    ...
+
+    background_tasks.add_task(func_name, arg1, arg2)
+```
+
+![Continuous Integration and Delivery](https://github.com/JohnSoi/fast_api_docker_demo/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=main)
